@@ -19,6 +19,7 @@ library(GGally)
 library(visdat)
 # Reading the data
 ProsCancer = read.delim("ProstateCancerData.txt", sep=",")
+ProsCancer$tissue = as.factor(ProsCancer$tissue)
 head(ProsCancer)
 dim(ProsCancer)
 # we have 502 rows and 552 features
