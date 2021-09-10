@@ -29,32 +29,32 @@ test %>%
 
 # Data Pre-processing
 
-rec <- recipe(tissue ~ ., data = train) %>% # what we are predicting and how 
-  step_impute_mean(all_numeric(), -all_outcomes()) %>% 
+rec <- recipe(tissue ~ ., data = train) %>% 
+  step_impute_knn(all_numeric(), -all_outcomes()) %>% 
   step_log(all_numeric(), -all_outcomes(), base = 10) 
   
 # {parsnip} ---------------------------------------------------------------
 
 # Model Building 
 
-# Decision tree model spec:
+# Decision tree model spec
 tree_mod <- decision_tree() %>% 
   set_engine("rpart") %>% 
   set_mode("classification")
 
 # {workflows} -------------------------------------------------------------
 
-# Creating a workflow object: 
+# Creating a workflow object
 wf <- workflow() %>% 
   add_recipe(rec) 
 
 
-# Fitting the data to the model:
+# Fitting the data to the model
 tree_mod_fit <- wf %>% 
   add_model(tree_mod) %>% 
   fit(train)
 
-# Creating our first predictions: 
+# Creating our first predictions
 tree_mod_pred <- predict(tree_mod_fit, test) %>% 
   bind_cols(select(test, tissue)) 
 
