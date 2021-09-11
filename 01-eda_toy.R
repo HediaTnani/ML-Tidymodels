@@ -41,7 +41,7 @@ ProsCancer %>%
   focus(n_missing) %>% filter(n_missing > 0)
 
 # Let's have a look at the proportion of missing data per tissue
-ProsCancer %>% select(-sample_id) %>% 
+ProsCancer %>% 
   dplyr::group_by(tissue) %>%
   skim() %>%
   focus(tissue,n_missing) %>% filter(n_missing > 0)
